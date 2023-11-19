@@ -1,6 +1,7 @@
 package asyncapi
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 
@@ -15,16 +16,16 @@ func OnLightMeasured(msg *message.Message) error {
     var lm LightMeasured
     err := json.Unmarshal(msg.Payload, &lm)
     if err != nil {
-        log.Printf("error unmarshalling message: %s, err is: %s", msg.Payload, err)
+        return err
     }
     return nil
 }
 
-func PublishToAMQP(p *amqp.Publisher, dest string, l LightMeasured) error {
+func PublishToAMQP(ctx context.Context, p *amqp.Publisher, dest string, l LightMeasured) error {
 
-    m, err := l.ToMessage()
+    m, err := PayloadToMessage(l)
     if err != nil {
-        log.Fatalf("error converting payload: %+v to message error: %s", l, err)
+        return err
     }
 
     return p.Publish(dest, &m)

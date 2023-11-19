@@ -13,10 +13,10 @@ type LightMeasured struct {
   SentAt string `json:"sentAt"`
 }
 
-func (l *LightMeasured) ToMessage() (message.Message, error) {
+func PayloadToMessage(i interface{}) (message.Message, error) {
   var m message.Message
 
-  b, err := json.Marshal(l)
+  b, err := json.Marshal(i)
   if err != nil {
     return m, nil
   }
