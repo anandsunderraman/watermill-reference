@@ -24,3 +24,15 @@ func (l *LightMeasured) ToMessage() (message.Message, error) {
 
   return m, nil
 }
+
+func PayloadToMessage(i interface{}) (*message.Message, error) {
+  var m message.Message
+
+  b, err := json.Marshal(i)
+  if err != nil {
+    return nil, nil
+  }
+  m.Payload = b
+
+  return &m, nil
+}
