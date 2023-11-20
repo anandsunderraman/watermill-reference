@@ -15,7 +15,7 @@ func GetKafkaSubscriber(kafkaBrokers string) (*kafka.Subscriber, error) {
 		Brokers:               []string{kafkaBrokers},
 		Unmarshaler:           kafka.DefaultMarshaler{},
 		OverwriteSaramaConfig: cfg,
-		//ConsumerGroup:         "test_consumer_group",
+		ConsumerGroup:         "test_consumer_group",
 	}
 
 	return kafka.NewSubscriber(
