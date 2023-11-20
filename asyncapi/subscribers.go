@@ -1,6 +1,7 @@
 package asyncapi
 
 import (
+	"github.com/Shopify/sarama"
 	"github.com/ThreeDotsLabs/watermill"
 	"github.com/ThreeDotsLabs/watermill-kafka/v2/pkg/kafka"
 )
@@ -9,7 +10,7 @@ import (
 func GetKafkaSubscriber(kafkaBrokers string) (*kafka.Subscriber, error) {
 
 	cfg := kafka.DefaultSaramaSubscriberConfig()
-	// cfg.Consumer.Offsets.Initial = sarama.OffsetOldest
+	cfg.Consumer.Offsets.Initial = sarama.OffsetOldest
 	kafkaConfig := kafka.SubscriberConfig{
 		Brokers:               []string{kafkaBrokers},
 		Unmarshaler:           kafka.DefaultMarshaler{},

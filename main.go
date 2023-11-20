@@ -57,9 +57,9 @@ func startKafkaPublishers(ctx context.Context) error {
 			return errors.Wrapf(err, "converting payload: %+v to message: %+v", l, err)
 		}
 
-		pub.Publish("light/measured", m)
+		pub.Publish("light-measured", m)
     if err != nil {
-      return errors.Wrapf(err, "publishing to topic: %s", "light/measured")
+      return errors.Wrapf(err, "publishing to topic: %s", "light-measured")
     }
     log.Printf("published message: %+v\n", l)
   }
@@ -67,11 +67,11 @@ func startKafkaPublishers(ctx context.Context) error {
 }
 
 func startKafkaSubscribers(ctx context.Context, router *message.Router) error {
-  amqpSubscriber, err := asyncapi.GetKafkaSubscriber(asyncapi.GetKafkaBroker())
+  kafkaSubscriber, err := asyncapi.GetKafkaSubscriber(asyncapi.GetKafkaBroker())
   if err != nil {
     return err
   }
 
-  asyncapi.ConfigureKafkaSubscriptionHandlers(router, amqpSubscriber)
+  asyncapi.ConfigureKafkaSubscriptionHandlers(router, kafkaSubscriber)
   return nil
 }
